@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="NetArchTest.Rules" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Backend\EngineeringMastery.Domain\EngineeringMastery.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Backend\EngineeringMastery.Application\EngineeringMastery.Application.csproj" />
+    <ProjectReference Include="..\..\src\Backend\EngineeringMastery.Infrastructure\EngineeringMastery.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Backend\EngineeringMastery.Api\EngineeringMastery.Api.csproj" />
+  </ItemGroup>
+
+</Project>

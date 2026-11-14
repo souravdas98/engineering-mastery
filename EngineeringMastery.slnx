@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Backend/">
+    <Project Path="src/Backend/EngineeringMastery.Api/EngineeringMastery.Api.csproj" />
+    <Project Path="src/Backend/EngineeringMastery.Application/EngineeringMastery.Application.csproj" />
+    <Project Path="src/Backend/EngineeringMastery.Domain/EngineeringMastery.Domain.csproj" />
+    <Project Path="src/Backend/EngineeringMastery.Infrastructure/EngineeringMastery.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Examples/">
+    <Project Path="src/Examples/EngineeringMastery.Examples/EngineeringMastery.Examples.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EngineeringMastery.ArchitectureTests/EngineeringMastery.ArchitectureTests.csproj" />
+    <Project Path="tests/EngineeringMastery.IntegrationTests/EngineeringMastery.IntegrationTests.csproj" />
+    <Project Path="tests/EngineeringMastery.UnitTests/EngineeringMastery.UnitTests.csproj" />
+  </Folder>
+</Solution>
