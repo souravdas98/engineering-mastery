@@ -1,0 +1,92 @@
+
+name: Release Validation
+
+on:
+  push:
+    tags:
+      - "v*"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate release tag
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $GITHUB_REF_NAME"
+            echo "Expected format: v1.0.0"
+            exit 1
+          fi
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore .NET dependencies
+        run: dotnet restore EngineeringMastery.slnx
+
+      - name: Verify .NET formatting
+        run: dotnet format EngineeringMastery.slnx --verify-no-changes --no-restore
+
+      - name: Build .NET solution
+        run: dotnet build EngineeringMastery.slnx --no-restore --configuration Release
+
+      - name: Run .NET tests
+        run: dotnet test EngineeringMastery.slnx --no-build --configuration Release
+
+      - name: Publish API
+        run: |
+          dotnet publish src/Backend/EngineeringMastery.Api/EngineeringMastery.Api.csproj \
+            --configuration Release \
+            --no-restore \
+            --output artifacts/api
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.20.0
+          cache: npm
+          cache-dependency-path: src/Frontend/engineering-mastery-web/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: src/Frontend/engineering-mastery-web
+        run: npm ci
+
+      - name: Run frontend lint
+        working-directory: src/Frontend/engineering-mastery-web
+        run: npm run lint
+
+      - name: Build frontend
+        working-directory: src/Frontend/engineering-mastery-web
+        run: npm run build
+
+      - name: Upload API artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: engineering-mastery-api
+          path: artifacts/api/
+          if-no-files-found: error
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: engineering-mastery-frontend
+          path: src/Frontend/engineering-mastery-web/dist/
+          if-no-files-found: error

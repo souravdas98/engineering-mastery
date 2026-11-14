@@ -1,0 +1,54 @@
+
+name: Documentation Validation
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: documentation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  markdown:
+    name: Markdown Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Markdown formatting
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: |
+            **/*.md
+            !node_modules
+
+  links:
+    name: Documentation Link Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate documentation links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >
+            --verbose
+            --no-progress
+            --exclude-mail
+            './**/*.md'
+          fail: true
