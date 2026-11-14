@@ -1,4 +1,5 @@
 # Step 1.1 — Create the backend solution
+
 Run these commands one by one:
 
 ```csharp
@@ -16,7 +17,7 @@ mkdir -p infrastructure/docker
 
 ```
 
-# Step 1.2 — Create backend projects
+## Step 1.2 — Create backend projects
 
 ```csharp
 
@@ -47,7 +48,7 @@ dotnet new classlib \
 
 ```
 
-# Step 1.3 — Create test projects
+## Step 1.3 — Create test projects
 
 ```csharp
 
@@ -61,8 +62,7 @@ dotnet new xunit \
 
 ```
 
-
-# Step 1.4 — Add projects to the solution
+## Step 1.4 — Add projects to the solution
 
 ```csharp
 dotnet sln add src/Backend/EngineeringMastery.Api
@@ -81,7 +81,8 @@ dotnet sln add tests/EngineeringMastery.IntegrationTests
 
 ```
 
-# Step 1.5 — Configure project references
+## Step 1.5 — Configure project references
+
 This is important because it establishes our architecture.
 
 ```csharp
@@ -110,7 +111,7 @@ dotnet add tests/EngineeringMastery.IntegrationTests reference \
 
 ```
 
-# Step 1.6 — Create frontend
+## Step 1.6 — Create frontend
 
 ```csharp
 
@@ -126,13 +127,13 @@ cd ../../..
 
 ```
 
-# Step 1.7 — Create root Git configuration
+## Step 1.7 — Create root Git configuration
 
 ```sql
 dotnet new gitignore
 ```
 
-# Step 1.8 — Verify the solution
+## Step 1.8 — Verify the solution
 
 ```csharp
 dotnet sln EngineeringMastery.sln list
