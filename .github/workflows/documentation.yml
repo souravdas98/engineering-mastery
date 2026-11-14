@@ -49,6 +49,5 @@ jobs:
           args: >
             --verbose
             --no-progress
-            --exclude-mail
             './**/*.md'
           fail: true
